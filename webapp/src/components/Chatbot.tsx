@@ -5,6 +5,7 @@ import { MessageSquare, X, Send, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PortfolioMode } from "@/store/useThemeStore";
 import { supabase } from "@/utils/supabaseClient";
+import { playMessageSent, playMessageReceived, playChatOpen } from "@/utils/sounds";
 
 // ─── Session ID ───────────────────────────────────────────────────────────────
 function getSessionId(): string {
@@ -30,6 +31,7 @@ type Message = {
 const THEME = {
   lead_dev: {
     fab: "bg-emerald-900 text-emerald-300 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.4)]",
+    fabPulse: "shadow-[0_0_30px_rgba(16,185,129,0.8)]",
     wrap: "bg-black border-emerald-700 text-emerald-400 font-mono",
     header: "border-emerald-800 bg-emerald-950/40",
     footer: "border-emerald-800 bg-black",
@@ -43,6 +45,7 @@ const THEME = {
   },
   curieux: {
     fab: "bg-gradient-to-br from-fuchsia-500 to-orange-500 text-white border-white/20 shadow-2xl",
+    fabPulse: "shadow-[0_0_30px_rgba(217,70,239,0.8)]",
     wrap: "bg-white border-fuchsia-300 text-slate-800",
     header: "border-fuchsia-100 bg-fuchsia-50",
     footer: "border-fuchsia-100 bg-white",
@@ -56,6 +59,7 @@ const THEME = {
   },
   hr: {
     fab: "bg-blue-600 text-white border-white/20 shadow-lg hover:bg-blue-700",
+    fabPulse: "shadow-[0_0_30px_rgba(37,99,235,0.8)]",
     wrap: "bg-white border-slate-200 text-slate-800",
     header: "border-slate-100 bg-slate-50",
     footer: "border-slate-100 bg-white",
@@ -99,11 +103,18 @@ export default function Chatbot({ mode }: { mode: PortfolioMode }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isSending, setIsSending] = useState(false);
+  // Count unread messages from Arthur while chat is closed
+  const [unreadCount, setUnreadCount] = useState(0);
+  // Pulse animation on FAB when new message arrives
+  const [isFabPulsing, setIsFabPulsing] = useState(false);
+
   const [sessionId] = useState<string>(() => getSessionId());
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const hasSubscribed = useRef(false);
   const hasNotified = useRef(false);
+  // Track message count to detect truly NEW incoming messages (vs. history load)
+  const prevMsgCountRef = useRef(0);
 
   const t = THEME[mode] ?? THEME.hr;
   const intro = INTRO[mode] ?? INTRO.hr;
@@ -115,8 +126,15 @@ export default function Chatbot({ mode }: { mode: PortfolioMode }) {
     }
   }, [messages, isOpen]);
 
+  // ── Reset unread count when chat is opened ───────────────────────────────────
+  useEffect(() => {
+    if (isOpen) {
+      setUnreadCount(0);
+      setIsFabPulsing(false);
+    }
+  }, [isOpen]);
+
   // ── Silent visitor notification to Arthur ───────────────────────────────────
-  // Fires once when the component mounts (i.e. visitor lands on the portfolio)
   useEffect(() => {
     if (hasNotified.current) return;
     hasNotified.current = true;
@@ -142,7 +160,10 @@ export default function Chatbot({ mode }: { mode: PortfolioMode }) {
       .eq("session_id", sessionId)
       .order("created_at", { ascending: true })
       .then(({ data }) => {
-        if (data?.length) setMessages(data as Message[]);
+        if (data?.length) {
+          setMessages(data as Message[]);
+          prevMsgCountRef.current = data.length;
+        }
       });
 
     // Subscribe to new inserts (for both visitor and Arthur's replies)
@@ -157,11 +178,34 @@ export default function Chatbot({ mode }: { mode: PortfolioMode }) {
           filter: `session_id=eq.${sessionId}`,
         },
         (payload) => {
+          const newMsg = payload.new as Message;
+
           setMessages((prev) => {
-            // Deduplicate by ID (avoids any double-render edge cases)
-            const newMsg = payload.new as Message;
+            // Deduplicate by ID
             if (prev.some((m) => m.id === newMsg.id)) return prev;
-            return [...prev, newMsg];
+            const updated = [...prev, newMsg];
+
+            // ── Auto-open + sound when Arthur replies ──────────────────────
+            if (newMsg.is_from_arthur) {
+              playMessageReceived();
+
+              setIsOpen((currentlyOpen) => {
+                if (!currentlyOpen) {
+                  // Auto-ouvre le chat
+                  setUnreadCount((c) => c + 1);
+                  setIsFabPulsing(true);
+                  // Petit délai pour laisser le son jouer, puis ouvre
+                  setTimeout(() => {
+                    setIsOpen(true);
+                    setIsFabPulsing(false);
+                    setUnreadCount(0);
+                  }, 400);
+                }
+                return currentlyOpen;
+              });
+            }
+
+            return updated;
           });
         }
       )
@@ -172,12 +216,49 @@ export default function Chatbot({ mode }: { mode: PortfolioMode }) {
     };
   }, [isOpen, sessionId]);
 
-  // ── Send handler (NO optimistic update — Realtime handles display) ──────────
+  // ── Also subscribe BEFORE chat is open to catch Arthur's replies ─────────────
+  // (so auto-open works even if visitor never opened the chat)
+  useEffect(() => {
+    if (hasSubscribed.current) return; // already subscribed via isOpen effect
+
+    const channel = supabase
+      .channel(`chat_passive_${sessionId}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "chat_messages",
+          filter: `session_id=eq.${sessionId}`,
+        },
+        (payload) => {
+          const newMsg = payload.new as Message;
+          if (newMsg.is_from_arthur) {
+            playMessageReceived();
+            setUnreadCount((c) => c + 1);
+            setIsFabPulsing(true);
+            // Auto-open after a brief moment
+            setTimeout(() => {
+              setIsOpen(true);
+            }, 400);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionId]);
+
+  // ── Send handler ─────────────────────────────────────────────────────────────
   const handleSend = useCallback(async () => {
     if (!inputValue.trim() || isSending) return;
     const text = inputValue.trim();
-    setInputValue(""); // Clear input immediately for UX
+    setInputValue("");
     setIsSending(true);
+    playMessageSent(); // 🔊 son d'envoi
 
     try {
       await fetch("/api/chat-send", {
@@ -185,14 +266,18 @@ export default function Chatbot({ mode }: { mode: PortfolioMode }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text, sessionId }),
       });
-      // The Realtime subscription will add the message to state automatically
     } catch (err) {
       console.error("Chat send failed:", err);
-      // Could show a toast here in the future
     } finally {
       setIsSending(false);
     }
   }, [inputValue, isSending, sessionId]);
+
+  // ── Open chat handler (with sound) ───────────────────────────────────────────
+  const handleOpen = useCallback(() => {
+    playChatOpen(); // 🔊 son d'ouverture
+    setIsOpen(true);
+  }, []);
 
   return (
     <>
@@ -201,16 +286,28 @@ export default function Chatbot({ mode }: { mode: PortfolioMode }) {
         {!isOpen && (
           <motion.button
             initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
+            animate={{
+              scale: isFabPulsing ? [1, 1.15, 1, 1.15, 1] : 1,
+            }}
+            transition={
+              isFabPulsing
+                ? { duration: 0.6, repeat: Infinity }
+                : { type: "spring", stiffness: 300 }
+            }
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            onClick={() => setIsOpen(true)}
-            className={`w-16 h-16 rounded-full shadow-2xl flex items-center justify-center backdrop-blur-lg border-2 ${t.fab}`}
+            onClick={handleOpen}
+            className={`w-16 h-16 rounded-full shadow-2xl flex items-center justify-center backdrop-blur-lg border-2 transition-shadow duration-300 ${t.fab} ${isFabPulsing ? t.fabPulse : ""}`}
           >
-            {messages.length > 0 && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-500 border-2 border-white text-[9px] font-bold text-white flex items-center justify-center">
-                {messages.filter(m => m.is_from_arthur).length}
-              </span>
+            {/* Badge unread count */}
+            {unreadCount > 0 && (
+              <motion.span
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 border-2 border-white text-[10px] font-bold text-white flex items-center justify-center"
+              >
+                {unreadCount}
+              </motion.span>
             )}
             <MessageSquare size={28} />
           </motion.button>
