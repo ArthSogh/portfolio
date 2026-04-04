@@ -1,0 +1,31 @@
+# Node / Next.js
+webapp/node_modules/
+webapp/.next/
+webapp/out/
+webapp/build/
+webapp/.vercel/
+
+# Env files — NE JAMAIS POUSSER CES FICHIERS !
+webapp/.env.local
+webapp/.env*.local
+*.env
+.env
+
+# TypeScript build info
+webapp/*.tsbuildinfo
+webapp/next-env.d.ts
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# PDF / documents personnels
+*.pdf
+
+# Supabase CLI
+supabase/.branches
+supabase/.temp

@@ -1,0 +1,110 @@
+{
+  "hr": {
+    "hero": {
+      "title": "Arthur Soghoyan - Ingénieur Backend & IA",
+      "subtitle": "Optimisation des infrastructures Cloud & Intégration de modèles IA avec une approche orientée ROI.",
+      "description": "Je transforme vos défis techniques en solutions rentables et scalables. Fort d'une double compétence en ingénierie logicielle et intelligence artificielle, je conçois des architectures backend (AWS, GCP) robustes tout en assurant une réduction drastique des coûts d'exploitation."
+    },
+    "experiences": [
+      {
+        "role": "Algorithm Engineer",
+        "company": "Stanley Robotics",
+        "date": "2025 (6 Mois)",
+        "description": "Développement et intégration d'algorithmes de scoring et de jumeaux numériques. Mise en place de pipelines CI/CD fiables et monitoring automatisé, garantissant des déploiements de haute qualité."
+      },
+      {
+        "role": "Backend Engineer",
+        "company": "iSpheres",
+        "date": "2022 - 2024",
+        "description": "Architecture backend et intégrations IoT. Garantie de la maintenabilité et de la qualité du code via des méthodologies Agile/Scrum rigoureuses et des revues de code systématiques."
+      }
+    ],
+    "projects": [
+      {
+        "name": "AutoApply (autoapply-n8n-bot)",
+        "description": "Conception d'un pipeline de recrutement IA automatisé. Impact majeur : Réduction des coûts d'inférence IA de 97% grâce à une stratégie ciblée de nettoyage des données."
+      },
+      {
+        "name": "Volinigi & Dedicate",
+        "description": "Développement de plateformes SaaS clé-en-main, de l'architecture backend jusqu'au déploiement, pour accélérer l'acquisition utilisateur."
+      },
+      {
+        "name": "HandMotion3D & Armistice-robot-arm",
+        "description": "Création de systèmes temps réel pour la capture de mouvement et l'optimisation de trajectoires robotiques, démontrant une forte capacité d'innovation appliquée."
+      }
+    ],
+    "chatCTA": "Discutons de vos enjeux techniques et de la manière dont je peux générer du ROI pour vos projets. Lancez le chat !"
+  },
+  "lead_dev": {
+    "hero": {
+      "title": "Arthur Soghoyan | Backend & MLOps Engineer",
+      "subtitle": "Python, Kotlin, PyTorch, Kubernetes, GCP/AWS.",
+      "description": "Spécialisé dans la conception d'API haute performance, les architectures orientées événements (event-driven) et les pipelines CI/CD complexes. Focus sur la testabilité, le cloud-native et l'optimisation des performances en production."
+    },
+    "experiences": [
+      {
+        "role": "Algorithm Engineer",
+        "company": "Stanley Robotics",
+        "date": "2025 (6 Mois)",
+        "description": "Implémentation d'algorithmes de scoring (Python/Kotlin) et prédiction de flux ML sur BigQuery GCP. Gestion d'infra avec Docker/K8s, monitoring de perf sous Datadog et pipelines de CI/CD (GitLab, Jenkins)."
+      },
+      {
+        "role": "Backend Engineer",
+        "company": "iSpheres",
+        "date": "2022 - 2024",
+        "description": "Dev backend multithreadé (Python) pour intégrations IoT temps réel. Traitement du signal (OpenCV, FFT) et protocoles de communication bas niveau (Ethernet, I2C, SPI). Approche clean code."
+      }
+    ],
+    "projects": [
+      {
+        "name": "AutoApply (autoapply-n8n-bot)",
+        "description": "Architecture cloud-native sur AWS EC2. ETL asynchrone orchestrant n8n, Puppeteer et PostgreSQL (dédoublonnage). Baisse de 97% des tokens LLM consommés via pre-processing et data cleaning intensif."
+      },
+      {
+        "name": "Volinigi & Dedicate",
+        "description": "Micro-SaaS avec gestion d'état centralisée, base de données relationnelles, intégration d'API tierces de paiement, et stratégies de cache avancées pour un TTI optimal."
+      },
+      {
+        "name": "HandMotion3D & Armistice-robot-arm",
+        "description": "Inférence temps-réel via PyTorch et MediaPipe en C++/Python. Modélisation de jumeaux numériques sous Matlab/Simulink pour le contrôle robotique."
+      }
+    ],
+    "chatCTA": "$> ./start_chat.sh --topic=\"architecture & infra\" # Ping-moi pour parler clean code et scalabilité."
+  },
+  "curious": {
+    "hero": {
+      "title": "Salut, c'est Arthur ! ♟️",
+      "subtitle": "Créateur de cerveaux artificiels et dompteur de robots.",
+      "description": "Joueur d'échecs (1700 Elo), amateur de poker et passionné de tech ! Je code les parties \"invisibles\" des applications que vous utilisez tous les jours, et je m'amuse à apprendre aux machines comment voir et réfléchir."
+    },
+    "experiences": [
+      {
+        "role": "Ingénieur Algorithmique",
+        "company": "Stanley Robotics",
+        "date": "2025",
+        "description": "J'ai aidé des robots voituriers à gérer des parkings tout seuls en créant des \"jumeaux numériques\" (des copies virtuelles du monde réel) pour qu'ils s'entraînent sans rien casser !"
+      },
+      {
+        "role": "Développeur Backend",
+        "company": "iSpheres",
+        "date": "2022 - 2024",
+        "description": "J'ai créé des programmes ultra-rapides pour faire communiquer des objets connectés entre eux en un clin d'œil, un peu comme un chef d'orchestre."
+      }
+    ],
+    "projects": [
+      {
+        "name": "AutoApply (le bot chercheur d'emploi)",
+        "description": "J'ai codé un assistant virtuel malin qui lit les offres d'emploi à ma place, filtre les meilleures et économise 97% de son budget \"réflexion\". Pratique, non ?"
+      },
+      {
+        "name": "Volinigi & Dedicate",
+        "description": "Des sites web interactifs et super fluides que j'ai construits de A à Z pour partager des expériences uniques. Allez y jeter un œil !"
+      },
+      {
+        "name": "HandMotion3D & Bras Robotique",
+        "description": "Un système qui capture les mouvements de votre main en 3D en temps réel via une simple caméra. Iron Man n'a qu'à bien se tenir !"
+      }
+    ],
+    "chatCTA": "Achievement unlocked : Vous m'avez trouvé ! Lancez le chat pour faire connaissance, parler tech ou faire une partie d'échecs ! ♘"
+  }
+}

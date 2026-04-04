@@ -1,0 +1,87 @@
+{
+  "hr": {
+    "hero": {
+      "title": "Ingénieur Backend & IA",
+      "subtitle": "Spécialisé dans l'optimisation des coûts et performances cloud.",
+      "summary": "M2 Systèmes Intelligents (ENS Paris-Saclay). Compétences clés : Python, AWS/GCP, SQL, Docker. Fort accent sur le ROI et l'efficacité des infrastructures."
+    },
+    "projects": [
+      {
+        "id": "autoapply",
+        "name": "AutoApply (Pipeline IA)",
+        "description": "Système de recrutement automatisé par LLM. Réduction drastique des coûts opérationnels.",
+        "kpi": "-97% sur les coûts d'inférence"
+      },
+      {
+        "id": "stanley",
+        "name": "Stanley Robotics",
+        "description": "Développement d'algorithmes de scoring et Digital Twins pour la gestion de flottes de robots."
+      },
+      {
+        "id": "volinigi",
+        "name": "Volinigi",
+        "description": "Projet récent développé et maintenu sur GitHub, démontrant la capacité à livrer des solutions de bout en bout."
+      }
+    ],
+    "contact": "Discutons de vos besoins techniques"
+  },
+  "lead_dev": {
+    "hero": {
+      "title": "Backend/AI Software Engineer",
+      "subtitle": "Building resilient systems & scaling infrastructure.",
+      "summary": "Stack: Python, Rust, SQL, Docker, Kubernetes. Focus on microservices arch, zero-copy serialization, and minimizing latency in distributed AI engines."
+    },
+    "projects": [
+      {
+        "id": "autoapply",
+        "name": "AutoApply",
+        "description": "Orchestration n8n + LLM pipelines. Shifted to local/optimized models to cut API costs.",
+        "tech": "Python, LLM, n8n, SQL"
+      },
+      {
+        "id": "stanley",
+        "name": "Stanley Robotics",
+        "description": "Implemented complex scoring logic and Digital Twin representations for real-time robotic navigation monitoring.",
+        "tech": "Robotics, Multithreading, Algorithms"
+      },
+      {
+        "id": "handmotion3d",
+        "name": "HandMotion3D",
+        "description": "Real-time 3D motion tracking using deep learning.",
+        "tech": "PyTorch, MediaPipe"
+      },
+      {
+        "id": "volinigi",
+        "name": "Volinigi",
+        "description": "End-to-end repository architecture showcasing clean code practices and solid design patterns."
+      }
+    ],
+    "contact": "ping arthur --msg='Let\\'s build'"
+  },
+  "curieux": {
+    "hero": {
+      "title": "Salut, je suis Arthur !",
+      "subtitle": "Je fabrique des cerveaux pour les machines 🤖",
+      "summary": "Quand je ne suis pas en train de coder des robots ou de l'IA, je joue aux échecs (1700 Elo ♟️) ou au poker. Je parle 4 langues : FR, EN, RU et Arménien !"
+    },
+    "projects": [
+      {
+        "id": "autoapply",
+        "name": "Le Recruteur Robot",
+        "description": "J'ai appris à une intelligence artificielle à lire des CVs et trouver le candidat idéal sans dépenser une fortune.",
+        "fun_fact": "Ça a réduit ma facture de 97% !"
+      },
+      {
+        "id": "stanley",
+        "name": "Robots Voituriers",
+        "description": "J'ai aidé des robots de chez Stanley Robotics à se garer tout seuls sans rayer les voitures."
+      },
+      {
+        "id": "handmotion3d",
+        "name": "Tracking 3D",
+        "description": "J'ai codé un modèle d'IA capable de deviner la position de tes doigts en 3D en temps réel vu par une simple caméra."
+      }
+    ],
+    "contact": "Lancer une nouvelle partie (Chat)"
+  }
+}
