@@ -44,18 +44,18 @@ const THEME = {
     notice: "text-emerald-600",
   },
   curieux: {
-    fab: "bg-gradient-to-br from-fuchsia-500 to-orange-500 text-white border-white/20 shadow-2xl",
-    fabPulse: "shadow-[0_0_30px_rgba(217,70,239,0.8)]",
-    wrap: "bg-white border-fuchsia-300 text-slate-800",
-    header: "border-fuchsia-100 bg-fuchsia-50",
-    footer: "border-fuchsia-100 bg-white",
-    input: "bg-slate-50 border border-fuchsia-200 focus:border-fuchsia-400 placeholder-slate-400 text-slate-800",
-    send: "bg-gradient-to-r from-fuchsia-500 to-orange-500 text-white",
-    bubbleSelf: "bg-gradient-to-r from-fuchsia-500 to-orange-500 text-white",
-    bubbleOther: "bg-slate-100 text-slate-800",
-    placeholder: "Votre message...",
-    title: "Discutons ! ✨",
-    notice: "text-slate-400",
+    fab: "bg-gradient-to-br from-indigo-500 to-purple-600 text-white border-white/20 shadow-2xl",
+    fabPulse: "shadow-[0_0_30px_rgba(99,102,241,0.8)]",
+    wrap: "bg-slate-900 border-indigo-500/50 text-white shadow-2xl shadow-indigo-500/20",
+    header: "border-indigo-900 bg-slate-800 text-white",
+    footer: "border-indigo-900 bg-slate-900",
+    input: "bg-slate-800 border border-indigo-500/30 focus:border-indigo-400 placeholder-slate-400 text-white",
+    send: "bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:opacity-90",
+    bubbleSelf: "bg-gradient-to-r from-indigo-500 to-purple-600 text-white border border-indigo-400/30",
+    bubbleOther: "bg-slate-800 text-white border border-slate-700",
+    placeholder: "Send a message...",
+    title: "Let's Talk! ✨",
+    notice: "text-indigo-300",
   },
   hr: {
     fab: "bg-blue-600 text-white border-white/20 shadow-lg hover:bg-blue-700",
@@ -84,8 +84,8 @@ const INTRO: Record<PortfolioMode, { lines: string[] }> = {
   },
   curieux: {
     lines: [
-      "Salut ! 👋 Je suis Arthur.",
-      "Ce chat est un lien direct avec moi. Envoyez-moi un message ici, je le reçois sur mon téléphone et je vous réponds en direct !",
+      "Hey! 👋 I'm Arthur.",
+      "This chat links directly to my phone. Drop a message, and I'll reply to you in real-time!",
     ],
   },
   hr: {
@@ -132,6 +132,16 @@ export default function Chatbot({ mode }: { mode: PortfolioMode }) {
       setUnreadCount(0);
       setIsFabPulsing(false);
     }
+  }, [isOpen]);
+
+  // ── Occasional vibration (Attention) ─────────────────────────────────────────
+  useEffect(() => {
+    if (isOpen) return;
+    const interval = setInterval(() => {
+      setIsFabPulsing(true);
+      setTimeout(() => setIsFabPulsing(false), 2000);
+    }, 15000);
+    return () => clearInterval(interval);
   }, [isOpen]);
 
   // ── Silent visitor notification to Arthur ───────────────────────────────────
