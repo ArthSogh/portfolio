@@ -23,8 +23,9 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# PDF / documents personnels
-*.pdf
+# PDF / documents personnels (racine uniquement, pas webapp/public/)
+/CV_Soghoyan.pdf
+/*.pdf
 
 # Supabase CLI
 supabase/.branches
