@@ -84,10 +84,10 @@ function ExperienceCard({ className }: { className?: string }) {
           </ul>
         </div>
 
-        {/* ISFER */}
+        {/* ISPHERE */}
         <div className="relative border-l-2 border-transparent ml-3 pl-6">
           <div className="absolute w-3 h-3 bg-slate-300 dark:bg-slate-600 rounded-full -left-[7px] top-1.5 ring-4 ring-white dark:ring-[#0f172a]" />
-          <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-0.5">ISFER</h4>
+          <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-0.5">ISPHERE</h4>
           <p className="text-sm font-bold text-slate-500 dark:text-slate-400 mb-3">Software Engineer (R&D, Fullstack / Backend)</p>
           <ul className="space-y-1.5 text-sm text-slate-600 dark:text-slate-300 font-medium list-none">
             <li className="flex items-start gap-2 before:content-[''] before:w-1.5 before:h-1.5 before:shrink-0 before:bg-slate-300 dark:before:bg-slate-600 before:rounded-full before:mt-1.5">Led software development for an industrial site in Montpellier</li>
