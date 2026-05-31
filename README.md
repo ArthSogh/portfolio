@@ -83,7 +83,7 @@ npm run build
 ---
 
 ## 👨‍💻 Author
-**Arthur Soghoyan** — Fullstack Engineer & Game Architect.
+**Arthur Soghoyan** — Fullstack Engineer.
 *   [GitHub](https://github.com/ArthSogh)
 *   [Portfolio Live](https://portfolio-mu-tan-28.vercel.app)
 
